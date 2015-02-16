@@ -1,7 +1,7 @@
 # Created by pyp2rpm-1.1.1
 %global pypi_name pysaml2
 
-Name:           %{pypi_name}
+Name:           python-pysaml2
 Version:        2.3.0
 Release:        1%{?dist}
 Summary:        Python implementation of SAML Version 2 to be used in a WSGI environment
