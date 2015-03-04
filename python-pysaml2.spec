@@ -33,7 +33,7 @@ Requires:       python-argparse
 README for PySAML2 n implementation of SAML Version 2 to be used in a WSGI environment.
 
 %prep
-%setup -q -n %{pypi_name}-%{version}
+%setup -q -n %{pypi_name}-%{upstream_version}
 # Remove bundled egg-info
 rm -rf %{pypi_name}.egg-info
 
@@ -62,7 +62,7 @@ rm -rf %{pypi_name}.egg-info
 %{python2_sitelib}/xmldsig
 %{python2_sitelib}/saml2
 %{python2_sitelib}/s2repoze
-%{python2_sitelib}/%{pypi_name}-%{version}-py?.?.egg-info
+%{python2_sitelib}/%{pypi_name}-%{upstream_version}-py?.?.egg-info
 
 %changelog
 * Mon Feb 16 2015 Dan Prince - 2.3.0-1
