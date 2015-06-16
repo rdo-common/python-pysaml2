@@ -5,7 +5,7 @@
 
 Name:           python-pysaml2
 Version:        3.0.0
-Release:        0.1.git%{shortcommit}%{?dist}
+Release:        0.2.git%{shortcommit}%{?dist}
 Summary:        Python implementation of SAML Version 2
 License:        Apache 2.0
 URL:            https://github.com/rohe/pysaml2
@@ -15,7 +15,8 @@ Source0:        https://github.com/rohe/%{pypi_name}/archive/%{commit}/%{pypi_na
 
 BuildArch:      noarch
  
-BuildRequires:  python-devel
+BuildRequires:  python2-devel
+BuildRequires:  python-setuptools
 #mongodict - not in Fedora
 BuildRequires:  python-pyasn1
 #pymongo==3.0.1 - 2.5.2 in Fedora
@@ -94,8 +95,9 @@ rm -rf html/.{doctrees,buildinfo}
 %doc html
 
 %changelog
-* Mon Jun 15 2015 Alan Pevec <apevec@redhat.com> - 3.0.0-0.1
+* Tue Jun 16 2015 Alan Pevec <apevec@redhat.com> - 3.0.0-0.2
 - include unreleased fix for https://github.com/rohe/pysaml2/issues/202
+- review feedback
 
 * Tue Mar 31 2015 Alan Pevec <apevec@redhat.com> - 2.4.0-1
 - Update to 2.4.0
