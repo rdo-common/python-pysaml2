@@ -5,16 +5,16 @@
 
 Name:           python-pysaml2
 Version:        3.0.0
-Release:        0.2.git%{shortcommit}%{?dist}
+Release:        0.3.git%{shortcommit}%{?dist}
 Summary:        Python implementation of SAML Version 2
-License:        Apache 2.0
+License:        ASL 2.0
 URL:            https://github.com/rohe/pysaml2
 # github tarball to include unreleased fix for
 # https://github.com/rohe/pysaml2/issues/202
 Source0:        https://github.com/rohe/%{pypi_name}/archive/%{commit}/%{pypi_name}-%{commit}.tar.gz
 
 BuildArch:      noarch
- 
+
 BuildRequires:  python2-devel
 BuildRequires:  python-setuptools
 #mongodict - not in Fedora
@@ -25,7 +25,7 @@ BuildRequires:  python-memcached >= 1.51
 BuildRequires:  pytest
 BuildRequires:  python-mako
 BuildRequires:  python-webob
- 
+
 BuildRequires:  python-decorator
 BuildRequires:  python-requests >= 1.0.0
 BuildRequires:  python-paste
@@ -64,6 +64,24 @@ Documentation for Python implementation of SAML Version 2.
 %setup -qn %{pypi_name}-%{commit}
 sed -i '/argparse/d' setup.py
 
+# Avoid non-executable-script rpmlint while maintaining timestamps
+find src -name \*.py |
+while read source; do
+  if head -n1 "$source" | grep -F '/usr/bin/env'; then
+    touch --ref="$source" "$source".ts
+    sed -i '/\/usr\/bin\/env python/{d;q}' "$source"
+    touch --ref="$source".ts "$source"
+    rm "$source".ts
+  fi
+done
+# special case for parse_xsd generated file which have lines like:
+#!!!! 'NoneType' object has no attribute 'py_class'
+source="src/saml2/schema/wsdl.py"
+touch --ref="$source" "$source".ts
+sed -i '1,3{d;q}' "$source"
+touch --ref="$source".ts "$source"
+rm "$source".ts
+
 %build
 %{__python2} setup.py build
 
@@ -82,6 +100,7 @@ rm -rf html/.{doctrees,buildinfo}
 #%{__python2} setup.py test
 
 %files
+%doc README.rst
 %license LICENSE.txt
 %{_bindir}/parse_xsd2.py
 %{_bindir}/make_metadata.py
@@ -95,9 +114,10 @@ rm -rf html/.{doctrees,buildinfo}
 %doc html
 
 %changelog
-* Tue Jun 16 2015 Alan Pevec <apevec@redhat.com> - 3.0.0-0.2
+* Wed Jun 17 2015 Alan Pevec <apevec@redhat.com> - 3.0.0-0.3.git27187f6
 - include unreleased fix for https://github.com/rohe/pysaml2/issues/202
 - review feedback
+- fix rpmlint errors
 
 * Tue Mar 31 2015 Alan Pevec <apevec@redhat.com> - 2.4.0-1
 - Update to 2.4.0
