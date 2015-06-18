@@ -1,6 +1,6 @@
 # Created by pyp2rpm-1.1.1
 %global pypi_name pysaml2
-%global commit 27187f6abef2262056977a9a4f7d3042387e4861
+%global commit 40603ae82e19c47a4e725320b709b03f92810875
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:           python-pysaml2
@@ -114,7 +114,7 @@ rm -rf html/.{doctrees,buildinfo}
 %doc html
 
 %changelog
-* Wed Jun 17 2015 Alan Pevec <apevec@redhat.com> - 3.0.0-0.3.git27187f6
+* Thu Jun 18 2015 Alan Pevec <apevec@redhat.com> - 3.0.0-0.3.git40603ae
 - include unreleased fix for https://github.com/rohe/pysaml2/issues/202
 - review feedback
 - fix rpmlint errors
