@@ -1,17 +1,13 @@
 # Created by pyp2rpm-1.1.1
 %global pypi_name pysaml2
-%global commit 40603ae82e19c47a4e725320b709b03f92810875
-%global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:           python-pysaml2
 Version:        3.0.0
-Release:        0.3.git%{shortcommit}%{?dist}
+Release:        1%{?dist}
 Summary:        Python implementation of SAML Version 2
 License:        ASL 2.0
 URL:            https://github.com/rohe/pysaml2
-# github tarball to include unreleased fix for
-# https://github.com/rohe/pysaml2/issues/202
-Source0:        https://github.com/rohe/%{pypi_name}/archive/%{commit}/%{pypi_name}-%{commit}.tar.gz
+Source0:        https://pypi.python.org/packages/source/p/%{pypi_name}/%{pypi_name}-%{version}.tar.gz
 
 BuildArch:      noarch
 
@@ -61,7 +57,7 @@ Documentation for Python implementation of SAML Version 2.
 
 
 %prep
-%setup -qn %{pypi_name}-%{commit}
+%setup -qn %{pypi_name}-%{version}
 sed -i '/argparse/d' setup.py
 
 # Avoid non-executable-script rpmlint while maintaining timestamps
@@ -114,6 +110,9 @@ rm -rf html/.{doctrees,buildinfo}
 %doc html
 
 %changelog
+* Wed Jul 15 2015 Alan Pevec <apevec@redhat.com> - 3.0.0-1
+- update to upstream release 3.0.0
+
 * Thu Jun 18 2015 Alan Pevec <apevec@redhat.com> - 3.0.0-0.3.git40603ae
 - include unreleased fix for https://github.com/rohe/pysaml2/issues/202
 - review feedback
