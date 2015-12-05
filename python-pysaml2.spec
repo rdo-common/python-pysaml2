@@ -2,7 +2,7 @@
 %global pypi_name pysaml2
 
 Name:           python-pysaml2
-Version:        3.0.0
+Version:        3.0.2
 Release:        1%{?dist}
 Summary:        Python implementation of SAML Version 2
 License:        ASL 2.0
@@ -110,6 +110,9 @@ rm -rf html/.{doctrees,buildinfo}
 %doc html
 
 %changelog
+* Sat Dec 05 2015 Alan Pevec <alan.pevec@redhat.com> 3.0.2-1
+- Update to 3.0.2
+
 * Wed Jul 15 2015 Alan Pevec <apevec@redhat.com> - 3.0.0-1
 - update to upstream release 3.0.0
 
