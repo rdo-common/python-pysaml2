@@ -1,5 +1,9 @@
 # Created by pyp2rpm-1.1.1
-%global pypi_name pysaml2
+%global sname pysaml2
+
+%if 0%{?fedora}
+%global with_python3 1
+%endif
 
 Name:           python-pysaml2
 Version:        3.0.2
@@ -7,9 +11,17 @@ Release:        2%{?dist}
 Summary:        Python implementation of SAML Version 2
 License:        ASL 2.0
 URL:            https://github.com/rohe/pysaml2
-Source0:        https://pypi.python.org/packages/source/p/%{pypi_name}/%{pypi_name}-%{version}.tar.gz
+Source0:        https://pypi.python.org/packages/source/p/%{sname}/%{sname}-%{version}.tar.gz
 
 BuildArch:      noarch
+
+
+%description
+PySAML2 implementation of SAML Version 2 to be used in a WSGI environment.
+
+
+%package -n python2-%{sname}
+Summary:        Python implementation of SAML Version 2
 
 BuildRequires:  python2-devel
 BuildRequires:  python-setuptools
@@ -44,8 +56,55 @@ Requires:       pyOpenSSL
 Requires:       python-dateutil
 Requires:       python-six
 
-%description
+
+%{?python_provide:%python_provide python2-%{sname}}
+
+%description -n python2-%{sname}
 PySAML2 implementation of SAML Version 2 to be used in a WSGI environment.
+
+%if 0%{?with_python3}
+%package -n python3-%{sname}
+Summary:        Python implementation of SAML Version 2
+
+BuildRequires:  python3-devel
+BuildRequires:  python3-setuptools
+#mongodict - not in Fedora
+BuildRequires:  python3-pyasn1
+#pymongo==3.0.1 - 2.5.2 in Fedora
+BuildRequires:  python3-pymongo
+BuildRequires:  python3-memcached >= 1.51
+BuildRequires:  python3-pytest
+BuildRequires:  python3-mako
+BuildRequires:  python3-webob
+
+BuildRequires:  python3-decorator
+BuildRequires:  python3-requests >= 1.0.0
+BuildRequires:  python3-paste
+BuildRequires:  python3-zope-interface
+BuildRequires:  python3-repoze-who
+BuildRequires:  python3-crypto >= 2.5
+BuildRequires:  python3-pytz
+BuildRequires:  python3-pyOpenSSL
+BuildRequires:  python3-dateutil
+BuildRequires:  python3-six
+
+Requires:       python3-decorator
+Requires:       python3-requests >= 1.0.0
+Requires:       python3-paste
+Requires:       python3-zope-interface
+Requires:       python3-repoze-who
+Requires:       python3-pycrypto >= 2.5
+Requires:       python3-pytz
+Requires:       python3-pyOpenSSL
+Requires:       python3-dateutil
+Requires:       python3-six
+
+
+%{?python_provide:%python_provide python3-%{sname}}
+
+%description -n python3-%{sname}
+PySAML2 implementation of SAML Version 2 to be used in a WSGI environment.
+%endif
 
 %package doc
 Summary:        Documentation for Python implementation of SAML Version 2
@@ -57,7 +116,7 @@ Documentation for Python implementation of SAML Version 2.
 
 
 %prep
-%setup -qn %{pypi_name}-%{version}
+%setup -qn %{sname}-%{version}
 sed -i '/argparse/d' setup.py
 
 # Avoid non-executable-script rpmlint while maintaining timestamps
@@ -79,7 +138,11 @@ touch --ref="$source".ts "$source"
 rm "$source".ts
 
 %build
-%{__python2} setup.py build
+%py2_build
+
+%if 0%{?with_python3}
+%py3_build
+%endif
 
 # drop alabaster Sphinx theme, not packaged in Fedora yet
 sed -i '/alabaster/d' doc/conf.py
@@ -89,21 +152,52 @@ sphinx-build doc html
 rm -rf html/.{doctrees,buildinfo}
 
 %install
-%{__python2} setup.py install --skip-build --root %{buildroot}
+%if 0%{?with_python3}
+%py3_install
+for bin in parse_xsd2 make_metadata mdexport merge_metadata; do
+    mv %{buildroot}%{_bindir}/$bin.py %{buildroot}%{_bindir}/$bin-%{python3_version}.py
+    ln -s ./$bin-%{python3_version}.py %{buildroot}%{_bindir}/$bin-3.py
+done
+%endif
+
+%py2_install
+for bin in parse_xsd2 make_metadata mdexport merge_metadata; do
+    mv %{buildroot}%{_bindir}/$bin.py %{buildroot}%{_bindir}/$bin-%{python2_version}.py
+    ln -s ./$bin-%{python2_version}.py %{buildroot}%{_bindir}/$bin-2.py
+    ln -s ./$bin-%{python2_version}.py %{buildroot}%{_bindir}/$bin.py             
+done
+
 
 # some testdeps are missing in Fedora
 #%check
 #%{__python2} setup.py test
 
-%files
+%files -n python2-%{sname}
 %doc README.rst
 %license LICENSE.txt
 %{_bindir}/parse_xsd2.py
 %{_bindir}/make_metadata.py
 %{_bindir}/mdexport.py
 %{_bindir}/merge_metadata.py
+%{_bindir}/parse_xsd2-2*.py
+%{_bindir}/make_metadata-2*.py
+%{_bindir}/mdexport-2*.py
+%{_bindir}/merge_metadata-2*.py
 %{python2_sitelib}/saml2
 %{python2_sitelib}/*.egg-info
+
+%if 0%{?with_python3}
+%files -n python3-%{sname}
+%doc README.rst
+%license LICENSE.txt
+%{_bindir}/parse_xsd2-3*.py
+%{_bindir}/make_metadata-3*.py
+%{_bindir}/mdexport-3*.py
+%{_bindir}/merge_metadata-3*.py
+%{python3_sitelib}/saml2
+%{python3_sitelib}/*.egg-info
+%endif
+
 
 %files doc
 %license LICENSE.txt
