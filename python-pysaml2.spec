@@ -7,7 +7,7 @@
 
 Name:           python-pysaml2
 Version:        3.0.2
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Python implementation of SAML Version 2
 License:        ASL 2.0
 URL:            https://github.com/rohe/pysaml2
@@ -93,7 +93,7 @@ Requires:       python3-requests >= 1.0.0
 Requires:       python3-paste
 Requires:       python3-zope-interface
 Requires:       python3-repoze-who
-Requires:       python3-pycrypto >= 2.5
+Requires:       python3-crypto >= 2.5
 Requires:       python3-pytz
 Requires:       python3-pyOpenSSL
 Requires:       python3-dateutil
@@ -204,6 +204,9 @@ done
 %doc html
 
 %changelog
+* Sun Nov 13 2016 Peter Robinson <pbrobinson@fedoraproject.org> 3.0.2-4
+- fix pycrypto dependency
+
 * Tue Jul 19 2016 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 3.0.2-3
 - https://fedoraproject.org/wiki/Changes/Automatic_Provides_for_Python_RPM_Packages
 
