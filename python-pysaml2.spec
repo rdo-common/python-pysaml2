@@ -7,7 +7,7 @@
 
 Name:           python-pysaml2
 Version:        3.0.2
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Python implementation of SAML Version 2
 License:        ASL 2.0
 URL:            https://github.com/rohe/pysaml2
@@ -204,6 +204,9 @@ done
 %doc html
 
 %changelog
+* Mon Dec 19 2016 Miro Hrončok <mhroncok@redhat.com> - 3.0.2-5
+- Rebuild for Python 3.6
+
 * Sun Nov 13 2016 Peter Robinson <pbrobinson@fedoraproject.org> 3.0.2-4
 - fix pycrypto dependency
 
