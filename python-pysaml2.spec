@@ -7,7 +7,7 @@
 
 Name:           python-pysaml2
 Version:        3.0.2
-Release:        6%{?dist}
+Release:        7%{?dist}
 Summary:        Python implementation of SAML Version 2
 License:        ASL 2.0
 URL:            https://github.com/rohe/pysaml2
@@ -15,6 +15,7 @@ Source0:        https://pypi.python.org/packages/source/p/%{sname}/%{sname}-%{ve
 
 BuildArch:      noarch
 
+Patch0:         python-pysaml2-3.0.2-CVE-2016-10149.patch
 
 %description
 PySAML2 implementation of SAML Version 2 to be used in a WSGI environment.
@@ -44,6 +45,7 @@ BuildRequires:  pytz
 BuildRequires:  pyOpenSSL
 BuildRequires:  python-dateutil
 BuildRequires:  python-six
+BuildRequires:  python-defusedxml
 
 Requires:       python-decorator
 Requires:       python-requests >= 1.0.0
@@ -55,6 +57,7 @@ Requires:       pytz
 Requires:       pyOpenSSL
 Requires:       python-dateutil
 Requires:       python-six
+Requires:       python-defusedxml
 
 
 %{?python_provide:%python_provide python2-%{sname}}
@@ -87,6 +90,7 @@ BuildRequires:  python3-pytz
 BuildRequires:  python3-pyOpenSSL
 BuildRequires:  python3-dateutil
 BuildRequires:  python3-six
+BuildRequires:  python3-defusedxml
 
 Requires:       python3-decorator
 Requires:       python3-requests >= 1.0.0
@@ -98,6 +102,7 @@ Requires:       python3-pytz
 Requires:       python3-pyOpenSSL
 Requires:       python3-dateutil
 Requires:       python3-six
+Requires:       python3-defusedxml
 
 
 %{?python_provide:%python_provide python3-%{sname}}
@@ -118,6 +123,7 @@ Documentation for Python implementation of SAML Version 2.
 %prep
 %setup -qn %{sname}-%{version}
 sed -i '/argparse/d' setup.py
+%patch0 -p1
 
 # Avoid non-executable-script rpmlint while maintaining timestamps
 find src -name \*.py |
@@ -204,6 +210,9 @@ done
 %doc html
 
 %changelog
+* Thu Mar 16 2017 Jason Joyce <jjoyce@redhat.com> - 3.0.2-7
+- security fix for entity expansion issue - CVE-2016-10149
+
 * Sat Feb 11 2017 Fedora Release Engineering <releng@fedoraproject.org> - 3.0.2-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
 
