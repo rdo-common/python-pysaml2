@@ -7,7 +7,7 @@
 
 Name:           python-pysaml2
 Version:        3.0.2
-Release:        7%{?dist}
+Release:        8%{?dist}
 Summary:        Python implementation of SAML Version 2
 License:        ASL 2.0
 URL:            https://github.com/rohe/pysaml2
@@ -210,6 +210,9 @@ done
 %doc html
 
 %changelog
+* Thu Jul 27 2017 Fedora Release Engineering <releng@fedoraproject.org> - 3.0.2-8
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
+
 * Thu Mar 16 2017 Jason Joyce <jjoyce@redhat.com> - 3.0.2-7
 - security fix for entity expansion issue - CVE-2016-10149
 
