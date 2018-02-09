@@ -7,7 +7,7 @@
 
 Name:           python-pysaml2
 Version:        3.0.2
-Release:        9%{?dist}
+Release:        10%{?dist}
 Summary:        Python implementation of SAML Version 2
 License:        ASL 2.0
 URL:            https://github.com/rohe/pysaml2
@@ -25,39 +25,39 @@ PySAML2 implementation of SAML Version 2 to be used in a WSGI environment.
 Summary:        Python implementation of SAML Version 2
 
 BuildRequires:  python2-devel
-BuildRequires:  python-setuptools
+BuildRequires:  python2-setuptools
 #mongodict - not in Fedora
-BuildRequires:  python-pyasn1
+BuildRequires:  python2-pyasn1
 #pymongo==3.0.1 - 2.5.2 in Fedora
-BuildRequires:  python-pymongo
-BuildRequires:  python-memcached >= 1.51
-BuildRequires:  pytest
-BuildRequires:  python-mako
-BuildRequires:  python-webob
+BuildRequires:  python2-pymongo
+BuildRequires:  python2-memcached >= 1.51
+BuildRequires:  python2-pytest
+BuildRequires:  python2-mako
+BuildRequires:  python2-webob
 
-BuildRequires:  python-decorator
-BuildRequires:  python-requests >= 1.0.0
-BuildRequires:  python-paste
-BuildRequires:  python-zope-interface
-BuildRequires:  python-repoze-who
-BuildRequires:  pycrypto >= 2.5
-BuildRequires:  pytz
-BuildRequires:  pyOpenSSL
-BuildRequires:  python-dateutil
-BuildRequires:  python-six
-BuildRequires:  python-defusedxml
+BuildRequires:  python2-decorator
+BuildRequires:  python2-requests >= 1.0.0
+BuildRequires:  python2-paste
+BuildRequires:  python2-zope-interface
+BuildRequires:  python2-repoze-who
+BuildRequires:  python2-crypto >= 2.5
+BuildRequires:  python2-pytz
+BuildRequires:  python2-pyOpenSSL
+BuildRequires:  python2-dateutil
+BuildRequires:  python2-six
+BuildRequires:  python2-defusedxml
 
-Requires:       python-decorator
-Requires:       python-requests >= 1.0.0
-Requires:       python-paste
-Requires:       python-zope-interface
-Requires:       python-repoze-who
-Requires:       pycrypto >= 2.5
-Requires:       pytz
-Requires:       pyOpenSSL
-Requires:       python-dateutil
-Requires:       python-six
-Requires:       python-defusedxml
+Requires:       python2-decorator
+Requires:       python2-requests >= 1.0.0
+Requires:       python2-paste
+Requires:       python2-zope-interface
+Requires:       python2-repoze-who
+Requires:       python2-crypto >= 2.5
+Requires:       python2-pytz
+Requires:       python2-pyOpenSSL
+Requires:       python2-dateutil
+Requires:       python2-six
+Requires:       python2-defusedxml
 
 
 %{?python_provide:%python_provide python2-%{sname}}
@@ -114,7 +114,7 @@ PySAML2 implementation of SAML Version 2 to be used in a WSGI environment.
 %package doc
 Summary:        Documentation for Python implementation of SAML Version 2
 
-BuildRequires:  python-sphinx
+BuildRequires:  python2-sphinx
 
 %description doc
 Documentation for Python implementation of SAML Version 2.
@@ -210,6 +210,10 @@ done
 %doc html
 
 %changelog
+* Fri Feb 09 2018 Iryna Shcherbina <ishcherb@redhat.com> - 3.0.2-10
+- Update Python 2 dependency declarations to new packaging standards
+  (See https://fedoraproject.org/wiki/FinalizingFedoraSwitchtoPython3)
+
 * Fri Feb 09 2018 Fedora Release Engineering <releng@fedoraproject.org> - 3.0.2-9
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 
