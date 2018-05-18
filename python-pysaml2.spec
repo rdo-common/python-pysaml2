@@ -1,129 +1,99 @@
-# Created by pyp2rpm-1.1.1
-%global sname pysaml2
+%global srcname pysaml2
 
-%if 0%{?fedora}
+Name:           python-%{srcname}
+Version:        4.5.0
+Release:        1%{?dist}
+Summary:        Python implementation of SAML Version 2
+License:        Apache 2.0
+URL:            https://github.com/IdentityPython/%{srcname}
+
+%global gittag v%{version}
+
+%if 0%{?fedora} <= 28 || 0%{?rhel}
+%global with_python2 1
+%endif
+
+%if 0%{?fedora} && ! 0%{?rhel}
 %global with_python3 1
 %endif
 
-Name:           python-pysaml2
-Version:        3.0.2
-Release:        10%{?dist}
-Summary:        Python implementation of SAML Version 2
-License:        ASL 2.0
-URL:            https://github.com/rohe/pysaml2
-Source0:        https://pypi.python.org/packages/source/p/%{sname}/%{sname}-%{version}.tar.gz
+Source0: https://github.com/IdentityPython/%{srcname}/archive/%{gittag}/%{srcname}-%{version}.tar.gz
 
 BuildArch:      noarch
 
-Patch0:         python-pysaml2-3.0.2-CVE-2016-10149.patch
+BuildRequires:  python3-sphinx
 
 %description
-PySAML2 implementation of SAML Version 2 to be used in a WSGI environment.
+PySAML2 is a pure python implementation of SAML2. It contains all
+necessary pieces for building a SAML2 service provider or an identity
+provider.  The distribution contains examples of both.  Originally
+written to work in a WSGI environment there are extensions that allow
+you to use it with other frameworks.
 
 
-%package -n python2-%{sname}
-Summary:        Python implementation of SAML Version 2
+%if 0%{?with_python2}
+%package -n python2-%{srcname}
+Summary: Python implementation of SAML Version 2
+
+%{?python_provide:%python_provide python2-%{srcname}}
+
+Requires: python2-requests >= 1.0.0
+Requires: python2-future
+Requires: python2-cryptography
+Requires: python2-pytz
+Requires: python2-pyOpenSSL
+Requires: python2-dateutil
+Requires: python2-defusedxml
+Requires: python2-six
 
 BuildRequires:  python2-devel
 BuildRequires:  python2-setuptools
-#mongodict - not in Fedora
-BuildRequires:  python2-pyasn1
-#pymongo==3.0.1 - 2.5.2 in Fedora
-BuildRequires:  python2-pymongo
-BuildRequires:  python2-memcached >= 1.51
-BuildRequires:  python2-pytest
-BuildRequires:  python2-mako
-BuildRequires:  python2-webob
 
-BuildRequires:  python2-decorator
-BuildRequires:  python2-requests >= 1.0.0
-BuildRequires:  python2-paste
-BuildRequires:  python2-zope-interface
-BuildRequires:  python2-repoze-who
-BuildRequires:  python2-crypto >= 2.5
-BuildRequires:  python2-pytz
-BuildRequires:  python2-pyOpenSSL
-BuildRequires:  python2-dateutil
-BuildRequires:  python2-six
-BuildRequires:  python2-defusedxml
+%description -n python2-%{srcname}
+PySAML2 is a pure python implementation of SAML2. It contains all
+necessary pieces for building a SAML2 service provider or an identity
+provider.  The distribution contains examples of both.  Originally
+written to work in a WSGI environment there are extensions that allow
+you to use it with other frameworks.
 
-Requires:       python2-decorator
-Requires:       python2-requests >= 1.0.0
-Requires:       python2-paste
-Requires:       python2-zope-interface
-Requires:       python2-repoze-who
-Requires:       python2-crypto >= 2.5
-Requires:       python2-pytz
-Requires:       python2-pyOpenSSL
-Requires:       python2-dateutil
-Requires:       python2-six
-Requires:       python2-defusedxml
-
-
-%{?python_provide:%python_provide python2-%{sname}}
-
-%description -n python2-%{sname}
-PySAML2 implementation of SAML Version 2 to be used in a WSGI environment.
+%endif
 
 %if 0%{?with_python3}
-%package -n python3-%{sname}
-Summary:        Python implementation of SAML Version 2
+%package -n python3-%{srcname}
+Summary: Python implementation of SAML Version 2
+
+%{?python_provide:%python_provide python3-%{srcname}}
+
+Requires: python3-requests >= 1.0.0
+Requires: python3-future
+Requires: python3-cryptography
+Requires: python3-pytz
+Requires: python3-pyOpenSSL
+Requires: python3-dateutil
+Requires: python3-defusedxml
+Requires: python3-six
 
 BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
-#mongodict - not in Fedora
-BuildRequires:  python3-pyasn1
-#pymongo==3.0.1 - 2.5.2 in Fedora
-BuildRequires:  python3-pymongo
-BuildRequires:  python3-memcached >= 1.51
-BuildRequires:  python3-pytest
-BuildRequires:  python3-mako
-BuildRequires:  python3-webob
 
-BuildRequires:  python3-decorator
-BuildRequires:  python3-requests >= 1.0.0
-BuildRequires:  python3-paste
-BuildRequires:  python3-zope-interface
-BuildRequires:  python3-repoze-who
-BuildRequires:  python3-crypto >= 2.5
-BuildRequires:  python3-pytz
-BuildRequires:  python3-pyOpenSSL
-BuildRequires:  python3-dateutil
-BuildRequires:  python3-six
-BuildRequires:  python3-defusedxml
+%description -n python3-%{srcname}
+PySAML2 is a pure python implementation of SAML2. It contains all
+necessary pieces for building a SAML2 service provider or an identity
+provider.  The distribution contains examples of both.  Originally
+written to work in a WSGI environment there are extensions that allow
+you to use it with other frameworks.
 
-Requires:       python3-decorator
-Requires:       python3-requests >= 1.0.0
-Requires:       python3-paste
-Requires:       python3-zope-interface
-Requires:       python3-repoze-who
-Requires:       python3-crypto >= 2.5
-Requires:       python3-pytz
-Requires:       python3-pyOpenSSL
-Requires:       python3-dateutil
-Requires:       python3-six
-Requires:       python3-defusedxml
-
-
-%{?python_provide:%python_provide python3-%{sname}}
-
-%description -n python3-%{sname}
-PySAML2 implementation of SAML Version 2 to be used in a WSGI environment.
 %endif
 
 %package doc
-Summary:        Documentation for Python implementation of SAML Version 2
-
-BuildRequires:  python2-sphinx
+Summary: Documentation for Python implementation of SAML Version 2
 
 %description doc
 Documentation for Python implementation of SAML Version 2.
 
-
 %prep
-%setup -qn %{sname}-%{version}
+%setup -qn %{srcname}-%{version}
 sed -i '/argparse/d' setup.py
-%patch0 -p1
 
 # Avoid non-executable-script rpmlint while maintaining timestamps
 find src -name \*.py |
@@ -144,56 +114,59 @@ touch --ref="$source".ts "$source"
 rm "$source".ts
 
 %build
-%py2_build
+%if 0%{?with_python2}
+ %py2_build
+%endif
 
 %if 0%{?with_python3}
-%py3_build
+ %py3_build
 %endif
 
 # drop alabaster Sphinx theme, not packaged in Fedora yet
-sed -i '/alabaster/d' doc/conf.py
+#sed -i '/alabaster/d' doc/conf.py
 # generate html docs
-sphinx-build doc html
+sphinx-build-3 doc html
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
 
 %install
+
 %if 0%{?with_python3}
 %py3_install
+
 for bin in parse_xsd2 make_metadata mdexport merge_metadata; do
     mv %{buildroot}%{_bindir}/$bin.py %{buildroot}%{_bindir}/$bin-%{python3_version}.py
     ln -s ./$bin-%{python3_version}.py %{buildroot}%{_bindir}/$bin-3.py
 done
-%endif
+%endif 
 
+%if 0%{?with_python2}
 %py2_install
 for bin in parse_xsd2 make_metadata mdexport merge_metadata; do
     mv %{buildroot}%{_bindir}/$bin.py %{buildroot}%{_bindir}/$bin-%{python2_version}.py
     ln -s ./$bin-%{python2_version}.py %{buildroot}%{_bindir}/$bin-2.py
     ln -s ./$bin-%{python2_version}.py %{buildroot}%{_bindir}/$bin.py             
 done
+%endif
 
-
-# some testdeps are missing in Fedora
-#%check
-#%{__python2} setup.py test
-
-%files -n python2-%{sname}
+%if 0%{?with_python2}
+%files -n python2-%{srcname}
 %doc README.rst
 %license LICENSE.txt
 %{_bindir}/parse_xsd2.py
-%{_bindir}/make_metadata.py
-%{_bindir}/mdexport.py
-%{_bindir}/merge_metadata.py
 %{_bindir}/parse_xsd2-2*.py
+%{_bindir}/make_metadata.py
 %{_bindir}/make_metadata-2*.py
+%{_bindir}/mdexport.py
 %{_bindir}/mdexport-2*.py
+%{_bindir}/merge_metadata.py
 %{_bindir}/merge_metadata-2*.py
 %{python2_sitelib}/saml2
 %{python2_sitelib}/*.egg-info
+%endif
 
 %if 0%{?with_python3}
-%files -n python3-%{sname}
+%files -n python3-%{srcname}
 %doc README.rst
 %license LICENSE.txt
 %{_bindir}/parse_xsd2-3*.py
@@ -204,12 +177,15 @@ done
 %{python3_sitelib}/*.egg-info
 %endif
 
-
 %files doc
 %license LICENSE.txt
 %doc html
 
 %changelog
+* Fri May 18 2018  <jdennis@redhat.com> - 4.5.0-1
+- upgrade to current upstream
+- enforce Python packaging standards
+
 * Fri Feb 09 2018 Iryna Shcherbina <ishcherb@redhat.com> - 3.0.2-10
 - Update Python 2 dependency declarations to new packaging standards
   (See https://fedoraproject.org/wiki/FinalizingFedoraSwitchtoPython3)
