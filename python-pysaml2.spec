@@ -2,14 +2,14 @@
 
 Name:           python-%{srcname}
 Version:        4.5.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Python implementation of SAML Version 2
 License:        Apache 2.0
 URL:            https://github.com/IdentityPython/%{srcname}
 
 %global gittag v%{version}
 
-%if 0%{?fedora} <= 28 || 0%{?rhel}
+%if 0%{?fedora} < 32 || 0%{?rhel}
 %global with_python2 1
 %endif
 
@@ -182,6 +182,9 @@ done
 %doc html
 
 %changelog
+* Wed Jun  6 2018  <jdennis@redhat.com> - 4.5.0-2
+- Resolves: rhbz#1582254 - re-enable python2 support
+
 * Fri May 18 2018  <jdennis@redhat.com> - 4.5.0-1
 - upgrade to current upstream
 - enforce Python packaging standards
