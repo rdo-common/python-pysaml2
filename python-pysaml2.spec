@@ -2,7 +2,7 @@
 
 Name:           python-%{srcname}
 Version:        4.5.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Python implementation of SAML Version 2
 License:        Apache 2.0
 URL:            https://github.com/IdentityPython/%{srcname}
@@ -182,6 +182,9 @@ done
 %doc html
 
 %changelog
+* Tue Jun 19 2018 Miro Hrončok <mhroncok@redhat.com> - 4.5.0-3
+- Rebuilt for Python 3.7
+
 * Wed Jun  6 2018  <jdennis@redhat.com> - 4.5.0-2
 - Resolves: rhbz#1582254 - re-enable python2 support
 
