@@ -2,7 +2,7 @@
 
 Name:           python-%{srcname}
 Version:        4.5.0
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Python implementation of SAML Version 2
 License:        Apache 2.0
 URL:            https://github.com/IdentityPython/%{srcname}
@@ -182,6 +182,9 @@ done
 %doc html
 
 %changelog
+* Sat Jul 14 2018 Fedora Release Engineering <releng@fedoraproject.org> - 4.5.0-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
+
 * Tue Jun 19 2018 Miro Hrončok <mhroncok@redhat.com> - 4.5.0-3
 - Rebuilt for Python 3.7
 
