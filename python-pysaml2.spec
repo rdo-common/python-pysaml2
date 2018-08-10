@@ -21,7 +21,11 @@ Source0: https://github.com/IdentityPython/%{srcname}/archive/%{gittag}/%{srcnam
 
 BuildArch:      noarch
 
+%if 0%{?with_python3}
 BuildRequires:  python3-sphinx
+%else
+BuildRequires:  python2-sphinx
+%endif
 
 %description
 PySAML2 is a pure python implementation of SAML2. It contains all
@@ -125,7 +129,11 @@ rm "$source".ts
 # drop alabaster Sphinx theme, not packaged in Fedora yet
 #sed -i '/alabaster/d' doc/conf.py
 # generate html docs
+%if 0%{?with_python3}
 sphinx-build-3 doc html
+%else
+sphinx-build-2 doc html
+%endif
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
 
