@@ -1,8 +1,8 @@
 %global srcname pysaml2
 
 Name:           python-%{srcname}
-Version:        4.5.0
-Release:        5%{?dist}
+Version:        4.6.5
+Release:        1%{?dist}
 Summary:        Python implementation of SAML Version 2
 License:        Apache 2.0
 URL:            https://github.com/IdentityPython/%{srcname}
@@ -20,8 +20,6 @@ URL:            https://github.com/IdentityPython/%{srcname}
 Source0: https://github.com/IdentityPython/%{srcname}/archive/%{gittag}/%{srcname}-%{version}.tar.gz
 
 BuildArch:      noarch
-
-BuildRequires:  python3-sphinx
 
 %description
 PySAML2 is a pure python implementation of SAML2. It contains all
@@ -48,6 +46,8 @@ Requires: python2-six
 
 BuildRequires:  python2-devel
 BuildRequires:  python2-setuptools
+BuildRequires:  python2-sphinx
+BuildRequires:  python2-defusedxml
 
 %description -n python2-%{srcname}
 PySAML2 is a pure python implementation of SAML2. It contains all
@@ -75,6 +75,8 @@ Requires: python3-six
 
 BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
+BuildRequires:  python3-sphinx
+BuildRequires:  python3-defusedxml
 
 %description -n python3-%{srcname}
 PySAML2 is a pure python implementation of SAML2. It contains all
@@ -122,13 +124,6 @@ rm "$source".ts
  %py3_build
 %endif
 
-# drop alabaster Sphinx theme, not packaged in Fedora yet
-#sed -i '/alabaster/d' doc/conf.py
-# generate html docs
-sphinx-build-3 doc html
-# remove the sphinx-build leftovers
-rm -rf html/.{doctrees,buildinfo}
-
 %install
 
 %if 0%{?with_python3}
@@ -149,10 +144,21 @@ for bin in parse_xsd2 make_metadata mdexport merge_metadata; do
 done
 %endif
 
+# drop alabaster Sphinx theme, not packaged in Fedora yet
+#sed -i '/alabaster/d' doc/conf.py
+# generate html docs
+%if 0%{?with_python3}
+PYTHONPATH=%{buildroot}%{python3_sitelib} sphinx-build-3 docs html
+%else
+PYTHONPATH=%{buildroot}%{python2_sitelib} sphinx-build docs html
+%endif
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
+
 %if 0%{?with_python2}
 %files -n python2-%{srcname}
 %doc README.rst
-%license LICENSE.txt
+%license LICENSE
 %{_bindir}/parse_xsd2.py
 %{_bindir}/parse_xsd2-2*.py
 %{_bindir}/make_metadata.py
@@ -168,7 +174,7 @@ done
 %if 0%{?with_python3}
 %files -n python3-%{srcname}
 %doc README.rst
-%license LICENSE.txt
+%license LICENSE
 %{_bindir}/parse_xsd2-3*.py
 %{_bindir}/make_metadata-3*.py
 %{_bindir}/mdexport-3*.py
@@ -178,10 +184,14 @@ done
 %endif
 
 %files doc
-%license LICENSE.txt
+%license LICENSE
 %doc html
 
 %changelog
+* Mon Feb 11 2019 Javier Peña <jpena@redhat.com> - 4.6.5-1
+- upgrade to current upstream (4.6.5)
+- Fix documentation build for python2
+
 * Sat Feb 02 2019 Fedora Release Engineering <releng@fedoraproject.org> - 4.5.0-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
 
